@@ -23,18 +23,18 @@ data = [
 def index() :
     return jsonify({'message' : 'Welcome to the Product API!', 'resource_endpoint' : '/products'}) ,200
 
-@app.route('/products')
+@app.route('/products', methods=['GET'])
 def get_products() :
-    category = request.args.get(category)
+    category = request.args.get('category')
     if category:
         filtered = [item for item in data if item['category'] == category]
         return jsonify(filtered), 200
     else :
         return jsonify(data), 200
     
-@app.route('/product/<int:id>')
+@app.route('/products/<int:id>', methods=['GET'])
 def get_product(id):
-    product = next([product for product in data if product['id'] == id], None)
+    product = next((product for product in data if product['id'] == id), None)
     if product:
         return jsonify(product), 200
     else :
